@@ -1,0 +1,194 @@
+{% extends "teacher/model.html" %}
+{% block teacher %}
+<!--我的信息-->
+					<div class='p_content_info info-mgb2'>
+						<div class='p_content_t'>
+							<span>{{ current_user.name }}</span>
+						</div>
+						<table class='p_content_table'>
+							<tr>
+								<td class='p_content_td'>邮&nbsp;箱:</td>
+								<td>{{ current_user.phone }}</td>
+							</tr>
+							<tr>
+								<td class='p_content_td'>年&nbsp;龄：</td>
+								<td>{{ current_user.age }}</td>
+							</tr>
+							<tr>
+								<td>性&nbsp;别：</td>
+								<td>{% if current_user.sex==True %}男{% elif current_user==False %}女{% endif %}</td>
+							</tr>
+
+							<tr>
+								<td class='p_content_td'>所在年级:</td>
+								<td>{{ current_user.grade }}</td>
+							</tr>
+							<tr>
+								<td class='p_content_td'>所学专业:</td>
+								<td>{{ current_user.major }}</td>
+							</tr>
+						</table>
+					</div>
+					<!--
+					<div class='t_content_img'>
+						<img alt="Photo" class="img-thumbnail" height="100px"
+							src="${sessionScope.user.userImage}" width="100px" />
+					</div>
+					-->
+					<div class='p_block'>
+						<div class='col-md-12 col-xs-12 margin-task'>
+							{% if not current_user.state %}
+							<div class='col-md-12 col-xs-12'>
+								
+								<h3 class='font-blue text-center'>您的账户还未认证，请<a href="{{ url_for('teacher.base_info') }}">上传证件</a>，进行资格审核
+								</h3>
+								
+							</div>
+							{% else %}
+							<div class='col-md-12 col-xs-12 task-wrap-padding'>
+								{% if not current_user.sex or not current_user.age %}
+								<div class='col-md-12 col-xs-12'>
+									<p>
+									<h3 class='text-center'>第一步：完善基本信息</h3>
+									</p>
+								</div>
+								<div class='col-md-12 col-xs-12'>
+									<a class='task-style' href='{{ url_for("teacher.base_info") }}'>
+										<div class='col-md-1 col-xs-1'>
+											<P>
+											<h1>
+												<i class='glyphicon glyphicon-hand-right'></i>
+											</h1>
+											</P>
+										</div>
+										<div class='col-md-10 col-xs-10'>
+											<div class='col-md-12 col-xs-12'>
+												<P>
+												<h4>基本信息</h4>
+												</P>
+											</div>
+											<div class='col-md-12 col-xs-12'>
+												<P>
+												<h5>
+													需要填写内容包括：您的基本情况，个人简介，上传个人照片和学生证照片。基本信息填写完整后，我们会进行人工资格审核，审核通过后才能发布课程哦。
+												</h5>
+												</P>
+											</div>
+										</div>
+										<div class='col-md-1 col-xs-1 padding-none'>
+											<p>
+											<h1>
+												<i class='glyphicon glyphicon-chevron-right'></i>
+											</h1>
+											</p>
+										</div>
+									</a>
+								</div>
+								{% endif %}
+								<div class='col-md-12 col-xs-12'>
+									<p>
+									<h3 class='text-center'>第二步：包装自己</h3>
+									</p>
+								</div>
+								<div class='col-md-12 col-xs-12'>
+									<a class='task-style task1-bottom'
+										href='/FamilyEdu/user/myFamilyEduT/achievement'>
+										<div class='col-md-1 col-xs-1'>
+											<P>
+											<h1>
+												<i class='glyphicon glyphicon-hand-right'></i>
+											</h1>
+											</P>
+										</div>
+										<div class='col-md-10 col-xs-10'>
+											<div class='col-md-12 col-xs-12'>
+												<P>
+												<h4>学习成果</h4>
+												</P>
+											</div>
+											<div class='col-md-12 col-xs-12'>
+												<P>
+												<h5>
+													家长很关心家教自己的学习情况，请把你的各种成绩、各种获奖、各种闪光点都写上来，我就不信家长不找你，嘿嘿。</h5>
+												</P>
+											</div>
+										</div>
+										<div class='col-md-1 col-xs-1'>
+											<p>
+											<h1>
+												<i class='glyphicon glyphicon-chevron-right'></i>
+											</h1>
+											</p>
+										</div>
+									</a>
+								</div>
+								<div class='col-md-12 col-xs-12'>
+									<a class='task-style' href='/FamilyEdu/user/myFamilyEduT/experience'>
+										<div class='col-md-1 col-xs-1'>
+											<P>
+											<h1>
+												<i class='glyphicon glyphicon-hand-right'></i>
+											</h1>
+											</P>
+										</div>
+										<div class='col-md-10 col-xs-10'>
+											<div class='col-md-12 col-xs-12'>
+												<P>
+												<h4>教学经历</h4>
+												</P>
+											</div>
+											<div class='col-md-12 col-xs-12'>
+												<P>
+												<h5>你的教学经历是对你个人能力的完美诠释，快写上你漂亮的经历，让家长了解一下你的个人能力吧。</h5>
+												</P>
+											</div>
+										</div>
+										<div class='col-md-1 col-xs-1'>
+											<p>
+											<h1>
+												<i class='glyphicon glyphicon-chevron-right'></i>
+											</h1>
+											</p>
+										</div>
+									</a>
+								</div>
+								<div class='col-md-12 col-xs-12'>
+									<p>
+									<h3 class='text-center'>第三步：发布课程</h3>
+									</p>
+								</div>
+								<div class='col-md-12 col-xs-12'>
+									<a class='task-style' href='/courses/new'>
+										<div class='col-md-1 col-xs-1'>
+											<P>
+											<h1>
+												<i class='glyphicon glyphicon-hand-right'></i>
+											</h1>
+											</P>
+										</div>
+										<div class='col-md-10 col-xs-10'>
+											<div class='col-md-12 col-xs-12'>
+												<P>
+												<h4>发布课程</h4>
+												</P>
+											</div>
+											<div class='col-md-12 col-xs-12'>
+												<P>
+												<h5>好激动哦，已经到最后一步了，发布自己擅长的课程，家长就可以约你喽，可以发布多个课程。</h5>
+												</P>
+											</div>
+										</div>
+										<div class='col-md-1 col-xs-1'>
+											<p>
+											<h1>
+												<i class='glyphicon glyphicon-chevron-right'></i>
+											</h1>
+											</p>
+										</div>
+									</a>
+								</div>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+{% endblock %}

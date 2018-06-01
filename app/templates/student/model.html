@@ -1,0 +1,144 @@
+{% extends "main/model.html" %}
+{% block title %}
+{{ super() }}
+学生中心
+{% endblock %}
+{% block styles %}
+{{ super() }}
+<link href="/static/css/jquery-ui.css"
+	rel="stylesheet" type="text/css" />
+	<style type="text/css">
+label.error{
+	color:#c00;
+}
+</style>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="/static/js/jquery-ui.js" type="text/javascript"></script>
+<script src="/static/js/jquery.validate.js" type="text/javascript"></script>
+{% endblock %}
+{% block main %}
+	<div id='p_header'>
+		<div class='p_wrapper'>
+			<div class='p_logo'>
+				<a href='{{ url_for("main.index") }}'> <img alt="家教网" class="header-logo-img2"
+					src="/static/image/logo2.png" />
+				</a>
+			</div>
+			<img alt="用户头像" class="p_title_img"
+				src="/static/image/userImg.png" />
+			<div class='p_title'>个人主页</div>
+		</div>
+	</div>
+
+		<div class='p_main'>
+		<div class='p_wrapper'>
+			<div class='p_menu'>
+				<div class='p_block'>
+					<div class='p_block_title'>
+						<h4>我的信息</h4>
+					</div>
+				</div>
+				<div class='p_block'>
+					<ul class='nav'>
+						<li><a
+                        {% if infomation=="用户中心" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("student.user_center") }}'> <i
+								class='glyphicon glyphicon-user'></i> 用户中心
+						</a></li>
+						<!--
+						<li><a
+                        { % if infomation=="基本信息" % }
+                               class='p_active'
+                        { % endif % }
+						 href='{ { url_for("student.base_info") } }'> <span
+								class='pnav-left'> 基本信息 </span>
+						</a></li>
+						-->
+						<li><a
+                        {% if infomation=="学生信息" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("student.student_info")}}'> <span
+								class='pnav-left'> 学生信息</span>
+						</a></li>
+						<li><a
+                        {% if infomation=="修改密码" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("student.change_password") }}'>
+								<i class='pnav-left'></i> 修改密码
+						</a></li>
+					</ul>
+				</div>
+				<div class='p_block'>
+					<div class='p_block_title'>
+						<h4>我的订单</h4>
+					</div>
+				</div>
+				<div class='p_block'>
+					<ul class='nav'>
+						<li><a
+                        {% if infomation=="预约家教" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("student.order_teacher") }}'> <i
+								class='glyphicon glyphicon glyphicon-pencil'></i> 预约家教
+						</a></li>
+						<li><a
+                        {% if infomation=="全部订单" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("student.all_order") }}'> <i
+								class='glyphicon glyphicon-align-justify'></i> 全部订单
+						</a></li>
+						<li><a
+                        {% if infomation=="待确认的订单" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("student.unconfirmed_order") }}'> <i
+								class='glyphicon glyphicon-time'></i> 待确认的订单
+						</a></li>
+						<li><a
+                        {% if infomation=="已确认的订单" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("student.confirmed_order") }}'> <i
+								class='glyphicon glyphicon glyphicon-check'></i> 已确认的订单
+						</a></li>
+						<li><a
+                        {% if infomation=="订单详情" %}
+                               class='p_active'
+                        {% endif %}
+						 href="{{ url_for('student.order_detail') }}"><i
+						         class='glyphicon glyphicon-pencil'></i>订单详情
+						 </a></li>
+					</ul>
+				</div>
+				<div class='p_block'></div>
+			</div>
+
+			<div class='p_content'>
+				<div class='p_block'>
+					<div class='p_block_title p_content_block_title'>
+						<h4>
+							<i class='glyphicon glyphicon-pencil'></i> {{ infomation }}
+						</h4>
+					</div>
+				</div>
+				<div class="p_block">
+					{% block student %}
+					{% endblock %}
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+{% endblock %}

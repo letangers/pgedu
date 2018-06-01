@@ -1,0 +1,99 @@
+{% extends "student/model.html" %}
+{% block scripts %}
+{{ super() }}
+	<script type="text/javascript">
+		jQuery('#teachDate').datepicker({
+			minDate : new Date()
+
+		});
+
+		jQuery("#addOrder").validate();
+	</script>
+{% endblock %}
+
+{% block student %}
+<!--订单详情-->
+	<div
+		style="width: 910px; height:900px; padding: 0px; border: 1px solid #dfdfdf; margin:0px auto; background-color: #fdfdfe">
+		<div class='p_block'>
+			<div class='p_block_title p_content_block_title'>
+				<h4>
+					<i class='glyphicon glyphicon-pencil'></i> 订单详情
+				</h4>
+			</div>
+		</div>
+		<div class="p_block">
+				<div class='order-step-title' style="width: 880px;">家教信息</div>
+				<div class='order-step-info' style="width: 880px;">
+					<div class='order-info-image' style="padding-left: 0px;width: 150px;padding-top: 10px;">
+						<img class="img-circle" src="${order.teacher.userImage }" />
+					</div>
+					<div class='order-info-teacher'>
+						<p class='order-info-title'>${order.teacher.username }</p>
+						<p>${order.teacher.school }</p>
+						<p>性别：${order.teacher.gender}</p>
+					</div>
+					<div class='order-info-teacher'>
+						<p>年龄：${order.teacher.age}</p>
+						<p>年级：${order.teacher.grade}</p>
+					</div>
+					<div style="padding-top: 30px">
+						<p>联系方式：${order.teacher.phoneNum}</p>
+						<p>专业：${order.teacher.major}</p>
+					</div>
+				</div>
+				<div class='order-step-title' style="width: 880px;">家长信息</div>
+				<div class='order-step-info' style="width: 880px;">
+					<div class='order-info-image' style="padding-left: 0px;width: 150px;padding-top: 10px;">
+						<img class="img-circle" src="${order.parent.userImage }" />
+					</div>
+					<div class='order-info-teacher' style="padding-top: 50px;width: 120px;">
+						<p class='order-info-title'>${order.parent.username }</p>
+					</div>
+					<div class='order-info-teacher' style="padding-top: 52px;">
+						<p >联系方式：${order.parent.phoneNum }</p>
+					</div>
+					<div class='order-info-teacher' style="padding-top: 52px;padding-left: 20px;">
+						<p >居住地区：${order.parent.address }</p>
+					</div>
+				</div>
+				<div class='order-step-title' style="width: 880px;">学生信息</div>
+				<div class='order-step-content' style="width: 880px;padding-left: 80px;margin-bottom: 10px;">
+					<div class='order-info-teacher' style="width: 120px; margin-right: 30px;">
+						<p class='order-info-title' style="width: 120px; margin-right: 30px;">${order.student.stuName}</p>
+					</div>
+					<div class='order-info-teacher' style="padding-top: 30px">
+						<p>年级：${order.student.stuGrade}</p>
+						<p>年龄：${order.student.stuAge}</p>
+					</div>
+					<div class='order-info-teacher' style="padding-top: 30px">
+						<p>学校：${order.student.stuSchool}</p>
+						<p>性别：${order.student.stuGender}</p>
+					</div>
+				</div>
+				<div class='order-step-content' style="width: 880px;padding-left: 80px;min-height: 30px;margin-top: 0px;">
+				学生简介：${order.student.stuInfo}
+				</div>
+				<div class='order-step-title' style="width: 880px;">课程信息</div>
+				<div class='order-step-content' style="width: 880px;margin-left: 0px;padding-left: 100px;">
+					<div class='order-info-teacher' style="padding-top: 30px;">
+						<p>教授课程：${order.teachSubject}</p>
+					</div>
+					<div class='order-info-teacher' style="padding-top: 30px">
+						<p>教授时间：${order.teachDate}</p>
+					</div>
+					<c:if test="${order.status==0 }">
+					<div class='order-info-teacher' style="padding-top: 30px">
+						<p>订单状态：订单未确认</p>
+					</div>
+					</c:if>
+					<c:if test="${order.status==1 }">
+					<div class='order-info-teacher' style="padding-top: 30px">
+						<p>订单状态：订单已确认</p>
+					</div>
+					</c:if>
+				</div>
+		</div>
+
+	</div>
+{% endblock %}

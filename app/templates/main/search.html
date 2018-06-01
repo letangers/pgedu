@@ -1,0 +1,262 @@
+{% extends "main/model.html" %}
+{% import "_macros.html" as macros %}
+{% block title %}
+{{ super() }}
+搜索
+{% endblock %}
+{% block styles %}
+{{ super () }}
+<link href="/static/css/index.css"
+	rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block main %}
+	<div class='autowidth' id='header'>
+		<div class='wrapper'>
+			<div class='header-search'>
+				<form accept-charset="UTF-8" action="{{ url_for('main.search') }}" method="post">
+					<div class='header-search-form'>
+						<i class='glyphicon glyphicon-search'></i> 
+						<input type="hidden" name="page" value="1">
+						<input type="hidden" name="sPeriod" value="0">
+						<input type="hidden" name="sGender" value="0">
+						<input type="hidden" name="sTeachMethod" value="0">
+						<input
+							class='header-search-input' name='course'
+							placeholder='输入搜索你想学的课程试试'> <input
+							class="header-search-btn" name="commit" type="submit" value="搜索" />
+					</div>
+				</form>
+
+			</div>
+			<div class='header-logo'>
+				<a href='{{ url_for("main.index") }}'> <img alt="家教网" class="header-logo-img"
+					src="/static/image/logo2.png" />
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<div id='search-item-div'>
+		<div class='div wrapper'>
+			<div class='search-item-box'>
+				<table class='table'>
+					      &nbsp; &nbsp;课程筛选
+					    <h4></h4>
+					<tr>
+						<td width='100px'>学生年级:</td>
+						<td align='left'>
+							<ul>
+								<li id="sPeriod_0" ><a
+									href="{{ url_for('main.search') }}" rel="nofollow">全部</a>
+								</li>
+								<li id="sPeriod_1" class="sPeriod"><a href="{{ url_for('main.search',grade='小学') }}"
+									rel="nofollow">小学</a></li>
+								<li id="sPeriod_2" class="sPeriod"><a href="{{ url_for('main.search',grade='初中') }}"
+									rel="nofollow">初中</a></li>
+								<li id="sPeriod_3"  class="sPeriod"><a href="{{ url_for('main.search',grade='高中') }}"
+									rel="nofollow">高中</a></li>
+							</ul>
+							
+						</td>
+					</tr>
+					<tr>
+						<td>家教性别:</td>
+						<td>
+							<ul>
+								<li id="sGender_0" class="sGender"><a
+									href="{{ url_for('main.search') }}" rel="nofollow">全部</a>
+								</li>
+								<li id="sGender_1" class="sGender"><a href="{{ url_for('main.search',sex='男') }}"
+									rel="nofollow">男</a></li>
+								<li id="sGender_2" class="sGender"><a href="{{ url_for('main.search',sex='女') }}"
+									rel="nofollow">女</a></li>
+							</ul>
+						</td>
+					</tr>
+
+				</table>
+			</div>
+		</div>
+	</div>
+	 
+	<div id='product'>
+		<div class='wrapper'>
+			<div class='course-list-div'>
+				 {% for course in courses %}
+					<div class='course-list-box'>
+
+						<div class='course-list-box-middle'>
+							<div class='course-list-box-middle-name'>
+								<span>{{ course.teacher.name }}</span> &nbsp;{% if course.teacher.sex %}男{% else %}女{% endif %}
+								 &nbsp;
+								{{ course.teacher.age }}岁
+							</div>
+							<!--
+							<div class='course-list-box-middle-check'>
+								<img alt="Xlrz" class="course-list-box-middle-check-rz"
+									src="/static/image/prove1.png"
+									title="学历认证" /> <img alt="Sfrz"
+									class="course-list-box-middle-check-rz"
+									src="/static/image/prove2.png"
+									title="身份认证" />
+							</div>
+						-->
+							<div class='course-list-box-middle-line'>
+								{{ course.teacher.grade }}</div>
+							<div class='course-list-box-middle-line'>教学科目：{{ course.grade }}{{ course.name }}</div>
+
+							<div class='course-list-box-middle-line'>个人简介:
+								{{ course.teacher.introduction }}</div>
+						</div>
+						<div class='course-list-box-right'>
+							<div class='course-list-box-right-detail'>
+								<a
+									href="{{ url_for('main.course_detail',course_id=course.id) }}"
+									class="btn btn-success" target="_blank"
+									style="margin-top: 50px;">查看详情</a>
+							</div>
+						</div>
+						<div class='course-list-box-line'></div>
+					</div>
+				 {% endfor %}
+			</div>
+		</div>
+	</div>
+
+
+
+	<!--
+	<div id="pageNav"
+		style="text-align: center; width: 1100px; margin: 0 auto;">
+		<nav style="text-align: center;">
+		<ul class="pagination">
+			<c:if test="${sessionScope.searchCurrentPage!=1}">
+
+				<li><a
+					href="/FamilyEdu/user/nav?page=${sessionScope.searchCurrentPage}&pageAction=pre&keyword=${sessionScope.currentKeyword}"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+				</a></li>
+
+			</c:if>
+			<c:forEach begin="${sessionScope.searchBeginPage}"
+				end="${sessionScope.searchTotalPage}" var="v">
+				<c:if test="${ v==searchCurrentPage}">
+					<li class="active"><a
+						href="/FamilyEdu/user/nav?page=${v }&keyword=${sessionScope.currentKeyword}">${v}</a>
+						</form></li>
+				</c:if>
+				<c:if test="${ v!=searchCurrentPage}">
+					<li><a
+						href="/FamilyEdu/user/nav?page=${v }&keyword=${sessionScope.currentKeyword}">${v}</a>
+					</li>
+				</c:if>
+			</c:forEach>
+			<c:if
+				test="${sessionScope.searchTotalPage!=sessionScope.searchCurrentPage}">
+				<c:if test="${sessionScope.searchTotalPage!=0}">
+				<li><a
+					href="/FamilyEdu/user/nav?page=${sessionScope.searchCurrentPage}&pageAction=next&keyword=${sessionScope.currentKeyword}"
+					aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+				</a></li>
+				</c:if>
+			</c:if>
+		</ul>
+		</nav>
+	</div>
+    -->
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-5">
+        <div class="pagination text-center">
+          {{ macros.pagination_widget(pagination, 'main.search') }}
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+{{ super () }}
+
+	<script type="text/javascript">
+	<!--/*
+		function noUser() {
+			jQuery("#noUserWrapper").show();
+			jQuery("#hasUserWrapper").hide();
+		}
+		function hasUser() {
+			jQuery("#hasUserWrapper").show();
+			jQuery("#noUserWrapper").hide();
+		}
+	-->
+		function searchPeriod0(){
+			jQuery("#sPeriod1").hide();
+			jQuery("#sPeriod2").hide();
+			jQuery("#sPeriod3").hide();
+			jQuery(".sPeriod").removeClass("search-active");
+			jQuery("#sPeriod_0").attr("class","search-active");
+		}
+		function searchPeriod1(){
+			jQuery("#sPeriod1").show();
+			jQuery("#sPeriod2").hide();
+			jQuery("#sPeriod3").hide();
+			jQuery(".sPeriod").removeClass("search-active");
+			jQuery("#sPeriod_1").addClass("search-active");
+		}
+		function searchPeriod2(){
+			jQuery("#sPeriod1").hide();
+			jQuery("#sPeriod2").show();
+			jQuery("#sPeriod3").hide();
+			jQuery(".sPeriod").removeClass("search-active");
+			jQuery("#sPeriod_2").addClass("search-active");
+			
+		}
+		function searchPeriod3(){
+			jQuery("#sPeriod1").hide();
+			jQuery("#sPeriod2").hide();
+			jQuery("#sPeriod3").show();
+			jQuery(".sPeriod").removeClass("search-active");
+			jQuery("#sPeriod_3").addClass("search-active");
+		}
+		function searchGrade(grade){
+			jQuery(".sGrade").removeClass("search-active");
+			jQuery("#sGrade_"+grade).addClass("search-active");
+		}
+		function searchGender(gender){
+			jQuery(".sGender").removeClass("search-active");
+			jQuery("#sGender_"+gender).addClass("search-active");
+		}
+		function searchTeachMethod(teachMethod){
+			jQuery(".sTeachMethod").removeClass("search-active");
+			jQuery("#sTeachMethod_"+teachMethod).addClass("search-active");
+		}
+	</script>
+	
+	<!-- <%
+		if (session.getAttribute("user") == null) {
+			out.print("<script type='text/javascript'>noUser();</script>");
+		}
+		if (session.getAttribute("user") != null) {
+			out.print("<script type='text/javascript'>hasUser();</script>");
+		}
+		if(session.getAttribute("searchPeriod")==null || session.getAttribute("searchPeriod").equals("0")){
+			out.print("<script type='text/javascript'>searchPeriod0();</script>");
+		}
+		else if(session.getAttribute("searchPeriod").equals("1")){
+			out.print("<script type='text/javascript'>searchPeriod1();</script>");
+		}else if(session.getAttribute("searchPeriod").equals("2")){
+			out.print("<script type='text/javascript'>searchPeriod2();</script>");
+		}else if(session.getAttribute("searchPeriod").equals("3")){
+			out.print("<script type='text/javascript'>searchPeriod3();</script>");
+		}
+		if(session.getAttribute("searchGrade")!=null){
+			out.print("<script type='text/javascript'>searchGrade("+session.getAttribute("searchGrade")+");</script>");
+		}
+		if(session.getAttribute("searchGender")!=null){
+			out.print("<script type='text/javascript'>searchGender("+session.getAttribute("searchGender")+");</script>");
+		}
+		if(session.getAttribute("searchTeachMethod")!=null){
+			out.print("<script type='text/javascript'>searchTeachMethod("+session.getAttribute("searchTeachMethod")+");</script>");
+		}
+	%> -->
+	out.print("<script type='text/javascript'>noUser();</script>");
+	out.print("<script type='text/javascript'>searchPeriod0();</script>");
+{% endblock %}

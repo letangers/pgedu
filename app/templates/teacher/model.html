@@ -1,0 +1,146 @@
+{% extends "main/model.html" %}
+{% block title %}
+{{ super() }}
+教师中心
+{% endblock %}
+{% block styles %}
+{{ super() }}
+<link href="/static/css/jquery-ui.css"
+	rel="stylesheet" type="text/css" />
+	<style type="text/css">
+label.error{
+	color:#c00;
+}
+</style>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="/static/js/jquery-ui.js" type="text/javascript"></script>
+<script src="/static/js/jquery.validate.js" type="text/javascript"></script>
+{% endblock %}
+{% block main %}
+<div id='p_header'>
+		<div class='p_wrapper'>
+			<div class='p_logo'>
+				<a href='{{ url_for("main.index") }}'> <img alt="家教网" class="header-logo-img2"
+					src="/static/image/logo2.png" />
+				</a>
+			</div>
+			<img alt="用户头像" class="p_title_img"
+				src="/static/image/userImg.png" />
+			<div class='p_title'>个人主页</div>
+		</div>
+	</div>
+
+	<div class='p_main'>
+		<div class='p_wrapper'>
+			<div class='p_menu'>
+				<div class='p_block'>
+					<div class='p_block_title'>
+						<h4>我的信息</h4>
+					</div>
+				</div>
+				<div class='p_block'>
+					<ul class='nav'>
+						<li><a
+                        {% if infomation=="用户中心" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("teacher.user_center") }}'
+                           <i class='glyphicon glyphicon-user'></i> 用户中心
+						</a></li>
+						<li><a 
+						{% if infomation=="基本信息" %}
+                               class='p_active'
+                        {% endif %}
+							href='{{ url_for("teacher.base_info") }}'> <span
+								class='pnav-left'> 基本信息 </span>
+						</a></li>
+						<li><a
+                        {% if infomation=="学习成果" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("teacher.study_achievement") }}'> <span
+								class='pnav-left'> 学习成果 </span>
+						</a></li>
+						<li><a
+                        {% if infomation=="教学经历" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("teacher.teach_experience") }}'> <span
+								class='pnav-left'> 教学经历 </span>
+						</a></li>
+						<li><a
+                        {% if infomation=="修改密码" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("teacher.change_password") }}'>
+								<i class='pnav-left'></i> 修改密码
+						</a></li>
+					</ul>
+				</div>
+				<div class='p_block'>
+					<div class='p_block_title'>
+						<h4>我的课程</h4>
+					</div>
+				</div>
+				<div class='p_block'>
+					<ul class='nav'>
+						<li><a
+                        {% if infomation=="发布课程" %}
+                               class='p_active'
+                        {% endif %}
+						href='{{ url_for("teacher.release_course") }}'> <i
+								class='glyphicon glyphicon-circle-arrow-up'></i> 发布课程
+						</a></li>
+					</ul>
+				</div>
+				<div class='p_block'>
+					<div class='p_block_title'>
+						<h4>我的订单</h4>
+					</div>
+				</div>
+				<div class='p_block'>
+					<ul class='nav'>
+						<li><a
+                        {% if infomation=="全部订单" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("teacher.all_order") }}'> <i
+								class='glyphicon glyphicon-align-justify'></i> 全部订单
+						</a> <a
+                        {% if infomation=="待确认的订单" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("teacher.unconfirmed_order") }}'> <i
+								class='glyphicon glyphicon-time'></i> 待确认的订单
+						</a> <a
+                        {% if infomation=="已确认的订单" %}
+                               class='p_active'
+                        {% endif %}
+						 href='{{ url_for("teacher.confirmed_order") }}'> <i
+								class='glyphicon glyphicon glyphicon-check'></i> 已确认的订单
+						</a>
+					</ul>
+				</div>
+				<div class='p_block'></div>
+			</div>
+
+			<div class='p_content' id="noValidateImage">
+				<div class='p_block'>
+					<div class='p_block_title p_content_block_title'>
+						<h4>
+							<i class='glyphicon-color glyphicon glyphicon-circle-arrow-up'>
+								{{ infomation }} </i>
+						</h4>
+					</div>
+				</div>
+				<div class='p_block'>
+				{% block teacher %}
+				{% endblock %}
+								</div>
+			</div>
+			
+		</div>
+	</div>
+	{% endblock %}

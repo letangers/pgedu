@@ -1,0 +1,222 @@
+body{
+	margin: 0;
+	color: #6D6D6D;
+    font-size: 14px;
+    font-family: PingHei, "Hiragino Sans GB", "Microsoft YaHei", arial,
+ sans-serif;
+    line-height: 1.5;
+    background-color: #f4f4f4;
+}
+.header{
+	z-index: 100;
+    background-color: #FFF;
+    width: 100%;
+    min-width: 1100px;
+    height: 100px;
+}
+.search-item-box{
+	margin-top: 12px;
+    background-color: #FFF;
+    width: 100%;
+    min-width: 1100px;
+   
+}
+.search-item{
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+.search-col{
+	margin-bottom: 12px;
+}
+.course-list-div{
+	margin-top: 12px;
+    background-color: #FFF;
+    width: 100%; 
+    min-width: 1100px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    
+}
+.header-logo-img{
+	margin-top: 0px;
+    width: 250px;
+    height: 80px;
+}
+.header-search{
+	position: relative;
+    top: 0px;
+    left: 250px;
+    width: 670px;
+    height: 100px;
+}
+.header-search-form {
+    position: relative;
+    left: -190px;
+    top: 17px;
+    width: 620px;
+    height: 40px;
+    border: 3px solid #41b5e8;
+}
+.header-search-input {
+    float: left;
+    border-image: none;
+    font-size: 14px;
+    line-height: 21px;
+    width: 500px;
+    height: 30px;
+    margin: 1px;
+    padding: 8px 0px 8px 25px;
+    vertical-align: top;
+    border-radius: 0px;
+    border: 0px;
+    outline: 0px none;
+}
+.header-search-btn {
+    float: right;
+    width: 80px;
+    height: 100%;
+    border: 0px;
+    background-color: #41b5e8;
+}
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.header-search-form i {
+    float: left;
+    margin: 8px auto auto 5px;
+}
+.border{
+	border:1px solid red;
+}
+.course-list-box{
+	float: left;
+    width: 1086px;
+    height: 180px;
+    margin: 5px auto 0px 20px;
+    padding: 3px;
+    border: 1px solid #41b5e8;
+}
+.course-list-box-left {
+    float: left;
+    width: 170px;
+    height: 100%;
+    border-radius: 5px;
+}
+.course-list-box-left-header {
+    float: left;
+    margin: 10px 20px;
+    text-align: center;
+}
+
+.course-list-box-middle {
+    float: left;
+    width: 680px;
+    height: 180px;
+    margin-left: 20px;
+}
+
+.course-list-box-right {
+    float: right;
+    width: 200px;
+    height: 100%;
+    text-align: center;
+}
+.course-list-box-line {
+    float: right;
+    width: 1px;
+    height: 160px;
+    border-right: 1px solid #cfcfcf;
+    margin-top: 8px;
+}
+.course-list-box-middle-name {
+    float: left;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+}
+.course-list-box-middle-check {
+    float: left;
+    width: 480px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 5px;
+}
+.course-list-box-middle-line {
+    float: left;
+    width: 100%;
+    height: 30px;
+}
+.course-list-box-right {
+    float: right;
+    width: 200px;
+    height: 100%;
+    text-align: center;
+}
+.course-list-box-line {
+    float: right;
+    width: 1px;
+    height: 160px;
+    border-right: 1px solid #cfcfcf;
+    margin-top: 8px;
+}
+.course-list-box-right-detail {
+    float: left;
+    width: 100%;
+    height: 40px;
+}
+
+/* ul li浠ユí鎺掓樉绀� */
+
+/* 鎵�鏈塩lass涓簃enu鐨刣iv涓殑ul鏍峰紡 */
+div.menu ul
+{
+    list-style:none; /* 鍘绘帀ul鍓嶉潰鐨勭鍙� */
+    margin: 0px; /* 涓庡鐣屽厓绱犵殑璺濈涓�0 */
+    padding: 0px; /* 涓庡唴閮ㄥ厓绱犵殑璺濈涓�0 */
+    width: auto; /* 瀹藉害鏍规嵁鍏冪礌鍐呭璋冩暣 */
+}
+/* 鎵�鏈塩lass涓簃enu鐨刣iv涓殑ul涓殑li鏍峰紡 */
+div.menu ul li
+{
+    float:left; /* 鍚戝乏婕傜Щ锛屽皢绔栨帓鍙樹负妯帓 */
+}
+/* 鎵�鏈塩lass涓簃enu鐨刣iv涓殑ul涓殑a鏍峰紡(鍖呮嫭灏氭湭鐐瑰嚮鐨勫拰鐐瑰嚮杩囩殑鏍峰紡) */
+div.menu ul li a, div.menu ul li a:visited
+{	
+    display: block; /* 姝ゅ厓绱犲皢鏄剧ず涓哄潡绾у厓绱狅紝姝ゅ厓绱犲墠鍚庝細甯︽湁鎹㈣绗� */
+    line-height: 1.35em; /* 琛岄珮 */
+    padding: 4px 20px; /* 鍐呴儴濉厖鐨勮窛绂� */
+    text-decoration: none; /* 涓嶆樉绀鸿秴閾炬帴涓嬪垝绾� */
+    white-space: nowrap; /* 瀵逛簬鏂囨湰鍐呯殑绌虹櫧澶勶紝涓嶄細鎹㈣锛屾枃鏈細鍦ㄥ湪鍚屼竴琛屼笂缁х画锛岀洿鍒伴亣鍒� <br> 鏍囩涓烘銆� */
+}
+/* 鎵�鏈塩lass涓簃enu鐨刣iv涓殑ul涓殑a鏍峰紡(榧犳爣绉诲姩鍒板厓绱犱腑鐨勬牱寮�) */
+div.menu ul li a:hover
+{
+	background-color: #41b5e8;
+    color: white;
+    text-decoration: none; /* 涓嶆樉绀鸿秴閾炬帴涓嬪垝绾� */
+}
+/* 鎵�鏈塩lass涓簃enu鐨刣iv涓殑ul涓殑a鏍峰紡(榧犳爣鐐瑰嚮鍏冪礌鏃剁殑鏍峰紡) */
+div.menu ul li a:active
+{
+  	background-color: #41b5e8;
+    color: white;
+    text-decoration: none; /* 涓嶆樉绀鸿秴閾炬帴涓嬪垝绾� */
+}
+
+div.menu .sel
+{
+  	background-color: #41b5e8;
+    color: white;
+    text-decoration: none;
+}
+

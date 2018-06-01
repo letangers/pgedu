@@ -1,0 +1,126 @@
+{% extends "teacher/model.html" %}
+{% block scripts %}
+{{ super() }}
+<!--
+<%
+	if (session.getAttribute("user") == null) {
+		response.sendRedirect("/FamilyEdu/user/login");
+	}%>
+	<% 
+	User u=(User)session.getAttribute("user");
+	if(u.getImageStatus()!=null&&!u.getImageStatus().equals("2")){
+		session.setAttribute("noStatus", "未进行资格认证");
+		response.sendRedirect("/FamilyEdu/user/myFamilyEduT/base");
+	}
+%>
+-->
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		$("#addCource").validate();
+	});
+</script>
+<script type="text/javascript">
+	_init_area();
+</script>
+{% endblock %}
+{% block teacher %}
+<!--我的课程-->
+
+					<div class='t_main'>
+						<div class='t_right'>
+							<div class='show'>
+							{% if current_user.state %}
+								<div class='panel-body'>
+									<form accept-charset="UTF-8"
+										action="{{ url_for('teacher.release_course') }}"
+										class="form-horizontal tpadding" id="addCourse" method="post">
+										<h4 class='text-danger'>
+											用户已通过资格认证，可以发布课程，每个用户最多可同时发布3个课程！</h4>
+										<div class='col-md-12 info-bottom'>
+											<div class='col-md-4'>
+												<h4>
+													发布课程 <span class='font-orange'> (*必填) </span>
+												</h4>
+											</div>
+										</div>
+
+
+										<div class='col-md-11'>
+											<div class='row'>
+												<label class="col-md-5 control-label" style="width: 106px;">教授科目：</label>
+												<div class='col-md-4' style="width: 160px;" >
+													<div class='form-group'>
+												<div class='col-md-7' style="color: #c00;">
+															<select name="grade" required
+																style="width: 150px; height: 34px; color: #6D6D6D;">
+																<option value="">--学生学段--</option>
+																<option value="兴趣">兴趣</option>
+																<option value="小学">小学</option>
+																<option value="初中">初中</option>
+																<option value="高中">高中</option>
+															</select>
+														</div>
+														</div></div>
+														<div class='col-md-4' style="width: 160px;" >
+														<div class='form-group'>
+												<div class='col-md-7'>
+															<input style="height: 34px;" type="text" name="name" placeholder="输入教学科目" required>
+														</div></div>
+														</div>
+											</div>
+										</div>
+
+										<div class='col-md-11'>
+											<div class='row'>
+												<div class='col-md-2 col-xs-2'
+													style="float: right; margin-top: 20px;">
+													<button class='btn btn-success'>
+														<span class='glyphicon glyphicon-pencil'></span> 发布课程
+													</button>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class='panel-body' style="padding-bottom: 30px;">
+									<div class='col-md-12 info-bottom'>
+										<div class='col-md-4'>
+											<h4>已发布课程</h4>
+										</div>
+									</div>
+								</div>
+								{% for course in courses %}
+									
+								<div class='col-md-11 info-bottom'>
+									<div class='row'>
+										<label class="col-md-4 text-center">教授科目：</label>
+										<div class='col-md-4'>
+											<h5 class="text-center"> {{ course.grade+course.name }}" </h5>
+										</div>
+										<div class='col-md-4 text-right'>
+											<form accept-charset="UTF-8"
+										    action="{{ url_for('teacher.release_course') }}"
+										    class="form-horizontal tpadding" id="deleteCourse"
+										    method="post">
+										    <input type="hidden" name="id"
+											value="{{ course.id }}">
+											<button class='btn btn-success'>
+												<span class='glyphicon glyphicon-pencil'></span> 删除课程
+											</button>
+											</form>
+										</div>
+									</div>
+								</div>
+
+
+
+							{% endfor %}
+							{% else %}
+							<p class="text-center">请填写资料并等待审核，审核通过之后才可以发布课程</p>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+{% endblock %}
+
+

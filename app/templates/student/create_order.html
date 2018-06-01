@@ -1,0 +1,115 @@
+{% extends "student/model.html" %}
+{% block scripts %}
+{{ super() }}
+
+	<script type="text/javascript">
+	jQuery('#teachDate').datepicker({
+		minDate:new Date()
+		
+	});
+	
+	jQuery("#addOrder").validate();
+	function sameUser() {
+		jQuery("#commitOrder").attr("disabled",
+				"true");
+		
+	}
+</script>
+<!-- <%
+User u=(User)request.getSession().getAttribute("user");
+Course c=(Course)request.getSession().getAttribute("bookCourse");
+if(u!=null&&c.getCreateId().equals(u.getId()+"")){
+	out.print("<script type='text/javascript'>sameUser();</script>");
+}
+%> -->
+<script type='text/javascript'>sameUser();</script>
+{% endblock %}
+
+{% block student %}
+<!--生成订单-->
+					<form accept-charset="UTF-8" id="addOrder"
+						action="/FamilyEdu/user/myFamilyEduS/order/addOrder"
+						class="form-horizontal" method="post">
+						<input name="teacherId" type="hidden" value="${bookCourse.createUser.id }" />
+						<div class='order-step-title' style="width: 880px;">第一步：确认课程信息</div>
+						<div class='order-step-info' style="width: 880px;">
+							<div class='order-info-image'>
+								<img class="img-circle"
+									src="/static/image/userImg.png" />
+							</div>
+							<div class='order-info-teacher'>
+								<p class='order-info-title'><!-- ${bookCourse.createUser.username } --> 用户名</p>
+								<p><!-- ${bookCourse.createUser.school } -->学校</p>
+								<p>联系方式：<!-- ${bookCourse.createUser.phoneNum} -->电话号码</p>
+							</div>
+							<div class='order-info-course'>
+								<p>课程：<!-- ${bookCourse.teachSubject} -->课程名</p>
+								<p>适教时间：<!-- ${bookCourse.freeTime} -->适教时间</p>
+							</div>
+						</div>
+						<div class='order-step-title' style="width: 880px;">第二步：确认联系方式</div>
+						<div class='order-step-content' style="width: 880px;">
+							<div class='form-group'>
+								<label class="col-md-2 col-xs-2 control-label">联系人</label>
+								<div class='col-md-4 col-xs-4'>
+									<input class="form-control" size="30" type="text"
+										value="${user.username }" disabled="disabled" />
+								</div>
+							</div>
+							<div class='form-group'>
+								<label class="col-md-2 col-xs-2 control-label">联系电话</label>
+								<div class='col-md-4 col-xs-4'>
+									<input class="form-control" size="30" type="text"
+										value="${user.phoneNum }" disabled="disabled" />
+								</div>
+							</div>
+							<div class='form-group'>
+								<label class=" col-md-2 col-xs-2 control-label">授课地址</label>
+								<div class='col-md-4 col-xs-4'>
+									<input class="form-control" value="${user.address }"
+										disabled="disabled" size="30" type="text" />
+								</div>
+							</div>
+						</div>
+						<div class='order-step-title' style="width: 880px;">第三步：填写授课详细信息</div>
+						<div class='order-step-content' style="width: 880px;">
+							<div class='form-group'>
+								<label class="col-md-2 col-xs-2 control-label">选择辅导学生</label>
+								<div class='col-md-4 col-xs-4'>
+									<c:forEach items="${myStudents}" var="myStudent">
+										<label class='radio-inline'> <input id="teacher_sex_1"
+											name="stuId" type="radio" value="${myStudent.id}" required/>
+											${myStudent.stuName}
+										</label>
+									</c:forEach>
+								</div>
+							</div>
+							<div class='form-group'>
+								<label class="col-md-2 col-xs-2 control-label">选择教学时间</label>
+								<div class='col-md-4 col-xs-4'>
+									<input class="form-control sel_time" id="teachDate"
+										name="teachDate" placeholder="选择教学时间" size="30" type="text"
+										required />
+								</div>
+							</div>
+							<div class='form-group'>
+								<label class="col-md-2 col-xs-2 control-label">填写补习课程</label>
+								<div class='col-md-4 col-xs-4'>
+									<input class="form-control" 
+										name="teachSubject"  type="text"
+										value="" size="30" placeholder="填写补习课程" required/>
+								</div>
+							</div>
+						</div>
+						
+
+						<div class='order-step-title' style="width: 880px;">
+							<div class='form-group' style="width:800px;">
+								<div class='col-md-2 col-xs-2' style="float: right;">
+									<input class="btn  btn-warning" name="commit"
+										type="submit" value="提交订单" id="commitOrder"/>
+								</div>
+							</div>
+						</div>
+					</form>
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends "teacher/model.html" %}
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		$("#deleteReason").validate();
+		jQuery(".deleteBtn").click(function() {
+			jQuery("#deleteReason").attr("action", $(this).attr('name'));
+		});
+		jQuery(".commentBtn").click(function() {
+			jQuery("#orderComment").text($(this).attr('name'));
+		});
+
+	});
+</script>
+{% endblock %}
+{% block teacher %}
+<!--全部订单-->
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th style="text-align: center;">课程名称</th>
+								<th style="text-align: center;">家长姓名</th>
+								<th style="text-align: center;">家长联系方式</th>
+								<th style="text-align: center;">试讲日期</th>
+								<th style="text-align: center;">学生名称</th>
+								<th style="text-align: center;">状态</th>
+								<th style="text-align: center;">订单详情</th>
+								<th style="text-align: center;" colspan="2">订单操作</th>
+							</tr>
+						</thead>
+						<c:forEach items="${tMyOrders }" var="myOrder">
+							<tr>
+								<td style="text-align: center; vertical-align: middle;">${myOrder.teachSubject}</td>
+								<td style="text-align: center; vertical-align: middle;">${myOrder.parent.username}</td>
+								<td style="text-align: center; vertical-align: middle;">${myOrder.parent.phoneNum}</td>
+								<td style="text-align: center; vertical-align: middle;">${myOrder.teachDate}</td>
+								<td style="text-align: center; vertical-align: middle;">${myOrder.student.stuName}</td>
+								<c:if test="${myOrder.status==0}">
+									<td style="text-align: center; vertical-align: middle;">
+										待确认</td>
+								</c:if>
+								<c:if test="${myOrder.status==1}">
+									<td style="text-align: center;">已确认</td>
+								</c:if>
+								<td style="text-align: center; vertical-align: middle;">
+									<form action="/FamilyEdu/user/order/detail" method="post"
+										target="_blank">
+										<input type="hidden" name="orderId" value="${myOrder.id}">
+										<button class="btn btn-success btn-xs">查看详情</button>
+									</form>
+								</td>
+								<c:if test="${myOrder.status==0}">
+									<td style="text-align: center; vertical-align: middle;"
+										colspan="1">
+										<form action="/FamilyEdu/user/myFamilyEduT/order/fFirmOrder"
+											method="post">
+											<input type="hidden" name="location"
+												value="redirect:/user/myFamilyEduT/order/?page=1">
+											<input type="hidden" name="orderId" value="${myOrder.id}">
+											<button class="btn btn-success btn-xs" onClick="return confirm('点击确定将确认订单，是否确定？')">确定订单</button>
+									</form>
+									</td>
+									<td style="text-align: center; vertical-align: middle;"
+										colspan="1">
+											<a class="btn btn-success btn-xs deleteBtn" data-toggle="modal"
+												data-target="#myModal" name="/FamilyEdu/user/myFamilyEduS/order/deleteOrder/${myOrder.id}">删除订单</a>
+									</td>
+								</c:if>
+								<c:if test="${myOrder.status==1}">
+									<c:if test="${myOrder.commentStatus==0}">
+									<td style="text-align: center; "
+										colspan="1">
+										暂无评价
+										</td>
+									<td></td>
+									</c:if>
+									<c:if test="${myOrder.commentStatus==1}">
+									<td style="text-align: center; "
+										colspan="1">
+										<a class="btn btn-success btn-xs commentBtn" data-toggle="modal"
+												data-target="#commentModal" name="${myOrder.comment}">查看评价</a>
+										</td>
+									<td></td>
+									</c:if>
+								</c:if>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
+				<div
+					style="position: absolute; top: 320px; margin: 0 auto; width: 910px;">
+					<nav style="text-align: center;">
+					<ul class="pagination">
+						<c:if test="${sessionScope.tOrdersCurrentPage!=1}">
+							<li><a
+								href="/FamilyEdu/user/myFamilyEduT/order?page=${sessionScope.tOrdersCurrentPage}&pageAction=pre"
+								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+							</a></li>
+						</c:if>
+						<c:forEach begin="${sessionScope.tOrdersBeginPage}"
+							end="${sessionScope.tOrdersTotalPage}" var="v">
+							<c:if test="${ v==tOrdersCurrentPage}">
+								<li class="active"><a
+									href="/FamilyEdu/user/myFamilyEduT/order?page=${v }">${v}</a></li>
+							</c:if>
+							<c:if test="${ v!=tOrdersCurrentPage}">
+								<li><a href="/FamilyEdu/user/myFamilyEduT/order?page=${v }">${v}</a></li>
+							</c:if>
+						</c:forEach>
+						<c:if
+							test="${sessionScope.tOrdersTotalPage!=sessionScope.tOrdersCurrentPage}">
+							<c:if test="${sessionScope.tOrdersTotalPage!=0}">
+							<li><a
+								href="/FamilyEdu/user/myFamilyEduT/order?page=${sessionScope.tOrdersCurrentPage}&pageAction=next"
+								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+							</a></li>
+							</c:if>
+						</c:if>
+					</ul>
+					</nav>
+				</div>
+
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form id="deleteReason" method="post">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">删除订单</h4>
+					</div>
+					<input type="hidden" name="role" value="教师">
+					<input type="hidden" name="location"
+												value="redirect:/user/myFamilyEduT/order?page=1">
+					<div class="modal-body">
+						<textarea rows="5" cols="78" style="resize: none;"
+							placeholder="输入删除订单原因" name="deleteReason" required data-msg-required="请输入删除原因"></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="submit" class="btn btn-primary" id="reasonSumbit">取消订单</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</form>
+		</div>
+		<!-- /.modal -->
+	</div>
+	
+	<!-- 查看评价模态框（Modal） -->
+	<div class="modal fade" id="commentModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">订单评价</h4>
+					</div>
+					<div class="modal-body">
+						<textarea rows="5" cols="78" style="resize: none;"
+							id="orderComment" disabled="disabled" ></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
+{% endblock %}

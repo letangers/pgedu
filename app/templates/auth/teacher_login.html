@@ -1,0 +1,111 @@
+{% extends "auth/model.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}
+teacher login
+{% endblock %}
+{% block css %}
+<link href="/static/css/bootstrap.css"
+	rel="stylesheet" type="text/css" />
+<link href="/static/css/userLogin.css"
+	media="all" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block script %}
+<script src="/static/js/userRegister.js"
+	type="text/javascript"></script>
+<script src="/static/js/jquery.validate.js"
+	type="text/javascript"></script>
+<script>
+	$(document).ready(function() {
+		$("#userLogin").validate();
+	});
+	function noActivate(){
+		alert("用户尚未进行激活，请到注册邮箱进行账户激活后登陆！");
+	}
+</script>
+
+<!--
+	<%
+		if (session.getAttribute("noActivate") != null) {
+			out.print("<script type='text/javascript'>noActivate();</script>");
+			session.removeAttribute("noActivate");
+		}
+	%>
+-->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#loginBtn").click(function(){
+				$.ajax({
+					type:'POST',
+					url:'{{ url_for("auth.teacher_login") }}',
+					data:{
+					"phone":$("#phone").val(),
+					"password":$("#password").val()					
+					},
+					success:function(date){
+						if(date=="1"){
+						}else if (date=="0") {
+							alert("账号或密码错误,请重新输入!");
+							location.href ='{{ url_for("auth.teacher_login") }}';
+						}
+					}
+				});	
+			});
+		});
+	</script>
+{% endblock %}
+{% block content %}
+
+
+	<div class='login_container autowidth'>
+		<div class='login_main'>
+			<div class='left'>
+				<img alt="家教网宣传图片" class="bgimg"
+					src="/static/image/registerImg2.png" />
+			</div>
+			<div class='right'>
+				<div class="LoginText">用户登录</div>
+				<div class='login-panel'>
+					<form accept-charset="UTF-8" action="{{ url_for('auth.teacher_login') }}"
+						class="form-horizontal" id="userLogin" method="post">
+                        {{ error }}
+                        <!--
+						<div class='inputs'>
+							<div class='input-group'>
+								<div class='input-group-addon left_bc'>
+									<span class='glyphicon glyphicon-user'></span>
+								</div>
+								<input autofocus="autofocus" class="login-controls txt_left" required
+								data-rule-phone="true" data-msg-required="请输入手机号"
+								data-msg-email="请输入正确的手机号" id="phone" name="phone" placeholder="请输入手机号"
+								size="30" type="text" value="" 	style="	margin-left: 40px;"/>
+							</div>
+						</div>
+						<div class='inputs'>
+							<div class='input-group'>
+								<div class='input-group-addon left_bc'>
+									<span class='glyphicon glyphicon-lock'></span>
+								</div>
+								<input autocomplete="off" class="login-controls txt-left"
+									id="password" name="password" required
+									data-msg-required="请输入密码,密码不能为空"
+									placeholder="请输入密码" size="30" type="password" 	style="	margin-left: 40px;"/>
+							</div>
+						</div>
+						<div class='input_div'>
+							<input class="btn btn-lg btn-block btn_back" name="commit" id="loginBtn"
+								type="submit" value="登录"/>
+						</div>
+						
+					
+                    -->
+                    {{ wtf.quick_form(login) }}
+                    <span> 
+							<a style="float: left; margin-left: 169px;  margin-top: 10px;"
+							href="{{ url_for('auth.teacher_register') }}">未有帐号，立即注册</a></span>
+                    </form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

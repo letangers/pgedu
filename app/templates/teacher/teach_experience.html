@@ -1,0 +1,214 @@
+{% extends "teacher/model.html" %}
+{% block scripts %}
+{{ super() }}
+<!--
+<%
+	if (session.getAttribute("user") == null) {
+		response.sendRedirect("/FamilyEdu/user/login");
+	}
+%>
+-->
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		$("#addExperience").validate();
+	});
+	jQuery('#beginDate').datepicker();
+	jQuery('#endDate').datepicker();
+</script>
+{% endblock %}
+{% block teacher %}
+<!--教学经历-->
+
+					<div class='t_main'>
+						<div class='t_right'>
+							<div class='show'>
+								<div class='panel-body'>
+									<form accept-charset="UTF-8"
+										action="/FamilyEdu/user/myFamilyEduT/achievement/addExperience"
+										class="form-horizontal tpadding" id="addExperience"
+										method="post">
+										<div class='form-group te-mgb'>
+											<div class='col-md-12 col-xs-12'>
+												<div class='form-group'>
+													<div class='tpadding'>
+														<div class='form-group'>
+															<div class='tpadding'>
+																<div class='form-group'>
+																	<div class='col-md-12 col-xs-12'>
+																		<div class='col-md-12 col-xs-12 info-bottom'>
+																			<div class='col-md-4 col-xs-4'>
+																				<h4>我的教学生涯</h4>
+																			</div>
+																			<div class='col-md-2 col-xs-2' style="float: right;">
+																				<button class='btn btn-success'>
+																					<span class='glyphicon glyphicon-floppy-save'></span>
+																					保存信息
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div id='careers_content'></div>
+														<div class="fields">
+															<div
+																class='panel panel-default tpanel-titles tpanel-ab b-radius'>
+																<div class='panel-heading tpanel-titles b-radius'>
+																	<div class='tpadding'>
+																		<div class='row'>
+																			<div class='col-md-4 col-xs-4'>我的学生</div>
+																		</div>
+																	</div>
+																</div>
+																<div class='panel-body'>
+																	<div class='row form-group'>
+																		<div class='col-md-2 col-xs-2'>
+																			<div class='start-time'>
+																				<input class="form-control sel_time" id="beginDate"
+																					name="beginDate" placeholder="开始辅导时间" size="30"
+																					type="text" required readonly="readonly" />
+																			</div>
+																		</div>
+																		<div class='col-md-2 col-xs-2'>
+																			<div class='end-time'>
+																				<input class="form-control sel_time" id="endDate"
+																					name="endDate" placeholder="辅导结束时间" type="text"
+																					required readonly="readonly" />
+																			</div>
+																		</div>
+																		<div class='col-md-2 col-xs-2'>
+																			<input class="form-control" id="studentName"
+																				name="studentName" placeholder="学生姓名" size="30"
+																				type="text" required />
+																		</div>
+																		<div class='col-md-3 col-xs-3'>
+																			<input class="form-control" id="studentSchool"
+																				name="studentSchool" placeholder="学生所在学校、年级"
+																				size="30" type="text" required />
+																		</div>
+																		<div class='col-md-3 col-xs-3'>
+																			<input class="form-control" id="studentSubject"
+																				name="teachSubject" placeholder="辅导科目" size="30"
+																				type="text" required />
+																		</div>
+																	</div>
+																	<div class='row'>
+																		<div class='col-md-12 col-xs-12'>
+																			<textarea class="form-control" cols="40"
+																				id="teachExperience" name="teachExperience"
+																				placeholder="请根据你对学生的辅导情况，谈谈辅导经验" rows="6" required>
+</textarea>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class='panel-body'>
+									<div class="form-horizontal tpadding">
+										<input type="hidden" name="id"
+											value="${sessionScope.user.id }">
+										<div class='form-group te-mgb'>
+											<div class='col-md-12 col-xs-12'>
+												<div class='form-group'>
+													<div class='tpadding'>
+														<div class='form-group'>
+															<div class='tpadding'>
+																<div class='form-group'>
+																	<div class='col-md-12 col-xs-12'>
+																		<div class='col-md-12 col-xs-12 info-bottom'>
+																			<div class='col-md-4 col-xs-4'>
+																				<h4>我的教学生涯展示</h4>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div id='careers_content'></div>
+														<div class="fields">
+															<c:forEach var="experience"
+																items="${sessionScope.experiences}">
+																<form
+																	action="/FamilyEdu/user/myFamilyEduT/achievement/deleteExperience"
+																	method="post">
+																	<input name="id" type="hidden"
+																		value="${experience.id }">
+																	<div
+																		class='panel panel-default tpanel-titles tpanel-ab b-radius'>
+																		<div class='panel-heading tpanel-titles b-radius'>
+																			<div class='tpadding'>
+																				<div class='row'>
+																					<div class='col-md-4 col-xs-4'>我的学生</div>
+																					<div
+																						class='col-md-1 col-xs-1 col-md-offset-7 col-xs-offset-7'>
+																						<button
+																							onClick="return confirm('点击确定将删除该学习经历，是否确定？')"
+																							style="border: none; height: 20px; background-color: #EFEFEF;">
+																							<span class='glyphicon glyphicon-remove-circle'></span>
+																						</button>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class='panel-body'>
+																			<div class='row form-group'>
+																				<div class='col-md-2 col-xs-2'>
+																					<div class='start-time'>
+																						<input class="form-control sel_time"
+																							value="${experience.beginDate }" size="30"
+																							type="text" readonly="readonly" />
+																					</div>
+																				</div>
+																				<div class='col-md-2 col-xs-2'>
+																					<div class='end-time'>
+																						<input class="form-control sel_time"
+																							value="${experience.endDate }" type="text"
+																							readonly="readonly" />
+																					</div>
+																				</div>
+																				<div class='col-md-2 col-xs-2'>
+																					<input class="form-control" size="30"
+																						value="${experience.studentName }" type="text"
+																						readonly="readonly" />
+																				</div>
+																				<div class='col-md-3 col-xs-3'>
+																					<input class="form-control" size="30"
+																						value="${experience.studentSchool }" type="text"
+																						readonly="readonly" />
+																				</div>
+																				<div class='col-md-3 col-xs-3'>
+																					<input class="form-control" size="30"
+																						value="${experience.teachSubject }" type="text"
+																						readonly="readonly" />
+																				</div>
+																			</div>
+																			<div class='row'>
+																				<div class='col-md-12 col-xs-12'>
+																					<textarea class="form-control" cols="40" rows="6"
+																						readonly="readonly">${experience.teachExperience }</textarea>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</form>
+															</c:forEach>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+{% endblock %}

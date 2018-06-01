@@ -1,0 +1,26 @@
+{% extends "auth/model.html" %}
+{% block title %}
+choose role
+{% endblock %}
+{% block css %}
+<link href="/static/css/register.css" media="all" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block script %}
+<script src="/static/js/register.js" type="text/javascript"></script>
+{% endblock %}
+{% block content %}
+	<div class='reg_cnt'>
+		<div class='preg_img' style="background-image: url(/static/image/registerStudent.png)">
+			<img alt="Pword" class="pword"
+				src="/static/image/registerStudentWord.png" /> 
+				<a
+				href="{{ url_for('auth.student_login') }}" class="btn btn-lg btn-success preg_btn">我是学生</a>
+		</div>
+		<div class='split_line'></div>
+		<div class='treg_img' style="background-image: url(/static/image/registerTeacher.png)">
+			<img alt="Tword" class="tword"
+				src="/static/image/registerTeacherWord.png" /> <a
+				href="{{  url_for('auth.teacher_login') }}" class="btn btn-lg btn-success reg_btn">我是教师</a>
+		</div>
+	</div>
+{% endblock %}

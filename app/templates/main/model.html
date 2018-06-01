@@ -1,0 +1,123 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}
+{{ super() }}
+{% endblock %}
+{% block styles %}
+{{ super() }}
+<link href="/static/css/bootstrap.css"
+	rel="stylesheet" type="text/css" />
+	<link href="/static/css/index.css"
+	rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block navbar %}
+{{ super() }}
+	<div id='site-nav'>
+
+	    {% if current_user.is_authenticated %}
+        <div class='wrapper' id="hasUserWrapper">
+			<ul class='status-info'>
+				<li>
+					<div class='main-link-div'>
+						<a class='main-link' href='{{ url_for("main.index") }}'> <i
+							class='glyphicon glyphicon-home'></i> 首页
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class='main-link-div'>
+						<a class='login-link' href='{{ url_for("student.user_center") }}'>
+							个人中心 </a>
+					</div>
+				</li>
+				<li>
+					<div class='main-link-div'></div>
+				</li>
+				<li><!-- 客服QQ: 346895397 --></li>
+			</ul>
+			<ul class='tag-info'>
+				<li><a class='login-link'
+					href='{% if current_user.permission==permission.student %}{{ url_for("student.user_center") }}
+					     {% elif current_user.permission==permission.teacher %}{{ url_for("teacher.user_center") }}
+					     {% endif %}'> <i
+						class='glyphicon glyphicon-user'></i> <!-- ${ sessionScope.user.username} -->{{ current_user.name }}
+				</a> <a class='register-link' href='{{ url_for("auth.logout") }}'> 退出 </a></li>
+			</ul>
+		</div>		
+		{% else %}
+		<div class='wrapper' id="noUserWrapper">
+			<ul class='status-info'>
+				<li>
+					<div class='main-link-div'>
+						<a class='main-link' href='{{ url_for("main.index") }}'> <i
+							class='glyphicon glyphicon-home'></i> 首页
+						</a>
+					</div>
+				</li>
+				<li>
+					<div class='main-link-div'></div>
+				</li>
+				<li><!-- 客服QQ: 346895397 --></li>
+			</ul>
+			<ul class='tag-info'>
+				<li><a class='login-link' href='{{ url_for("auth.select_role") }}'> <i
+						class='glyphicon glyphicon-user'></i> 请登录
+				</a> <a class='register-link' href='{{ url_for("auth.select_role") }}'> 免费注册 </a></li>
+			</ul>
+		</div>
+		{% endif %}
+	</div>
+{% endblock %}
+{% block content %}
+{{ super() }}
+  <div class="container">
+  {% block main %}
+  {% endblock %}
+  </div>
+  {% block foot %}
+	<div id='footer-div'>
+		<div class='wrapper'>
+			<div class='footer-service'>
+				<div class='footer-service-title'>客服电话：</div>
+				<div class='footer-service-content'>1388888888</div>
+			</div>
+			<div class='footer-intro'>
+				<div class='footer-intro-head'>
+					<span class='footer-intro-title'> 盘古教育 </span> <span
+						class='footer-intro-substitle'> 中小学生家教预约平台 </span>
+				</div>
+				<p class='footer-desc'>盘古教育 -中小学生家教预约平台
+					是一个互联网教育平台。为了学习更有效、为了教育更灵活、更亲切，我们致力于本地化家教教育。在这个平台上，老师和学生可以免费发布信息、随时沟通、灵活教学。学生无论是为了应对升学，攻克难题，还是课外兴趣发展，我们都能提供强大的知识和经验支持。
+				</p>
+				<p class='footer-desc'>
+					<br> Copyright © 2017 盘古教育
+				</p>
+			</div>
+			<div class='footer-about'>
+				<i></i>
+				<ul class='footer-list'>
+					<li><a> 活动公告 </a></li>
+					<li><a> 常见问题 </a></li>
+					<li><a> 服务协议 </a></li>
+					<li><a> 隐私声明 </a></li>
+					<li><a> 商务合作 </a></li>
+				</ul>
+			</div>
+			<div class='footer-contact'>
+				<i></i>
+				<ul class='footer-list'>
+					<li><a> 意见反馈 </a></li>
+					<li><a> 官方微信 </a></li>
+					<li><a> 新浪微博 </a></li>
+					<li><a> 关于我们 </a></li>
+					<li><a> 联系我们 </a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+  {% endblock %}
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="/static/js/jquery-1.11.2.js"></script>
+<script src="/static/js/bootstrap.js"></script>
+{% endblock %}

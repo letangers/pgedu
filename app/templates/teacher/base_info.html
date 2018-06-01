@@ -1,0 +1,306 @@
+{% extends "teacher/model.html" %}
+{% block styles %}
+{{ super() }}
+<style type="text/css">
+#grade {
+	width: 113px;
+	height: 34px;
+}
+</style>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+	$(document).ready(function() {
+		$("#edidTBaseInfo").validate();
+	});
+	$(document).ready(function() {
+		$("#updateImages").validate();
+	});
+	$(document).ready(function() {
+		$("#updateUserImage").validate();
+	});
+	$(document).ready(function() {
+		$("#updateTBaseInfo").validate();
+	});
+</script>
+<!--
+<%
+	if (session.getAttribute("user") == null) {
+		response.sendRedirect("/FamilyEdu/user/login");
+	}
+%>
+
+
+	<script type="text/javascript">
+		/**
+		function noValidateImage() {
+			jQuery("#noValidateImage").show();
+			jQuery("#hasValidateImage").hide();
+			jQuery("#ingValidateImage").hide();
+		}
+		function hasValidateImage() {
+			jQuery("#hasValidateImage").show();
+			jQuery("#noValidateImage").hide();
+			jQuery("#ingValidateImage").hide();
+		}
+		function ingValidateImage() {
+			jQuery("#ingValidateImage").show();
+			jQuery("#hasValidateImage").hide();
+			jQuery("#noValidateImage").hide();
+		}**/
+		function noValidateImage() {
+			jQuery("#updateImages").show();
+			jQuery("#updateUserImage").hide();
+			jQuery("#ingValidateImage").hide();
+		}
+		function hasValidateImage() {
+			jQuery("#updateUserImage").show();
+			jQuery("#updateImages").hide();
+			jQuery("#ingValidateImage").hide();
+		}
+		function ingValidateImage() {
+			jQuery("#ingValidateImage").show();
+			jQuery("#updateImages").hide();
+			jQuery("#updateUserImage").hide();
+		}
+		function fGenderChecked() {
+			jQuery("#teacher_sex_2").attr("checked", "checked");
+		}
+		function mGenderChecked() {
+			jQuery("#teacher_sex_1").attr("checked", "checked");
+		}
+
+		function gradeSelete() {
+			jQuery("#grade").val("${sessionScope.user.grade}");
+		}
+		
+		function noStatus(){
+			alert("用户尚未进行资格认证，请资格认证后再进行课程发布");
+		}
+	</script>
+
+	<%
+		User u = (User) session.getAttribute("user");
+		if(u==null){
+			response.sendRedirect("/FamilyEdu/user/login");
+		}
+		if (u.getImageStatus()!=null&&u.getImageStatus().equals("0")) {
+			out.print("<script type='text/javascript'>noValidateImage();</script>");
+		} else if (u.getImageStatus()!=null&&u.getImageStatus().equals("2")) {
+			out.print("<script type='text/javascript'>hasValidateImage();</script>");
+		} else {
+			out.print("<script type='text/javascript'>ingValidateImage();</script>");
+		}
+
+		String gender = u.getGender();
+		if(gender!=null){
+		if (gender.equals("2")) {
+			out.print("<script type='text/javascript'>fGenderChecked();</script>");
+		} else {
+			out.print("<script type='text/javascript'>mGenderChecked();</script>");
+		}
+		if (u.getGender() != null) {
+			out.print("<script type='text/javascript'>gradeSelete();</script>");
+		}
+		}
+		if (session.getAttribute("noStatus") != null) {
+			out.print("<script type='text/javascript'>noStatus();</script>");
+			session.removeAttribute("noStatus");
+		}
+	%> -->
+{% endblock %}
+{% block teacher %}
+<!--基本信息-->
+
+	<div class='t_main'>
+		<div class='t_right'>
+			<div class='show'>
+				<div class='panel-body'>
+				{% if current_user.state %}
+					<form accept-charset="UTF-8"
+						action="{{ url_for('teacher.base_info') }}"
+						class="form-horizontal tpadding" enctype="multipart/form-data"
+						id="edidTBaseInfo" method="post">
+						<div class='col-md-12 info-bottom'>
+							<div class='col-md-4'>
+								<h4>
+									个人基本信息
+								</h4>
+							</div>
+						</div>
+						<input type="hidden" name="id"
+							value="{{ current_user.id }}">
+						<div class='col-md-11'>
+							<div class='row'>
+								<div class='col-md-4'>
+									<div class='form-group'>
+										<label class="col-md-5 control-label " for="teacher_姓名：">姓名：</label>
+										<div class='col-md-7' style="color: #c00;">
+											<input class="form-control" id="teacher_name" name="name"
+												required data-msg-required="请输入用户名" minlength="2"
+												maxlength="20" data-msg-minlength="用户名长度为2~20个字符"
+												value="{{ current_user.name }}" />
+										</div>
+									</div>
+								</div>
+								<div class='col-md-4'>
+									<div class='form-group'>
+										<label class="col-md-5 control-label " for="teacher_年龄：">年龄：</label>
+										<div class='col-md-7' style="color: #c00;">
+											<input class="form-control" id="teacher_age" name="age"
+												type="number" value="{{ current_user.age }}" />
+										</div>
+									</div>
+								</div>
+								<div class='col-md-4'>
+									<div class='form-group'>
+										<label class="col-md-5 control-label" for="teacher_性别：">性别：</label>
+										<div class='col-md-7'>
+											<label class='radio-inline'> <input
+												id="teacher_sex_1" name="sex" type="radio" value="男" />
+												男
+											</label> <label class='radio-inline'> <input
+												id="teacher_sex_2" name="sex" type="radio" value="女" />
+												女
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class='col-md-11'>
+							<div class='row'>
+								<div class='col-md-4'>
+									<div class='form-group'>
+										<label class="col-md-5 control-label"
+											for="student_identity_年级：">年级：</label>
+										<div class='col-md-7' style="color: #c00;">
+											<select name="grade" required id="grade"
+												style="color: black;" data-msg-required="年级一栏不能为空"
+												class="grade">
+												<option value="">--选择年级--</option>
+												<option value="大一">大一</option>
+												<option value="大二">大二</option>
+												<option value="大三">大三</option>
+												<option value="大四">大四</option>
+												<option value="在读研究生">在读研究生</option>
+												<option value="已毕业">已毕业</option>
+												<option value="在教教师">在教教师</option>
+											</select>
+
+										</div>
+									</div>
+								</div>
+								<div class='col-md-4'>
+									<div class='form-group'>
+										<label class="col-md-5 control-label"
+											for="student_identity_专业：">专业：</label>
+										<div class='col-md-7' style="color: #c00;">
+											<input class="form-control" id="student_identity_major"
+												name="major" size="30" type="text" required
+												data-msg-required="所学专业不能为空"
+												value="{{ current_user.major }}" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class='col-md-11'>
+							<div class='row'>
+								<label class="col-md-5 control-label" style="width: 106px;">空闲时间：</label>
+								<div class='col-md-7' style="height: 49px;">
+									<input class="form-control" name="free_time" required
+										type="text" style="width: 630px;"
+										 value="{{ current_user.free_time }}" />
+								</div>
+							</div>
+						</div>
+						<div class='col-md-11'>
+							<div class='col-md-12 te-right'>
+								<label class="col-md-5 control-label" style="width: 106px;">个人简介</label>
+								<textarea class="form-control" cols="40"
+									id="teacher_introduction" name="introduction"
+									placeholder="请填写个人简介,可以详细的说明一下自己的学习，工作，性格，经验等，以便家长更好的了解你，加深自己在家长心中的印象，提高自己的竞争力。。。。。。"
+									rows="8">{{ current_user.introduction }}</textarea>
+								<input class=" btn btn-success" type="submit" value="保存信息"
+									style="float: right; margin-top: 20px;" />
+							</div>
+						</div>
+					</form>
+					{% else %}
+					<form accept-charset="UTF-8"
+						action="{{ url_for('teacher.base_info') }}"
+						class="form-horizontal tpadding" enctype="multipart/form-data"
+						id="" method="post">
+						<h4 class='text-danger'>
+							该用户暂未通过资格认证，请上传资料并耐心等待</h4>
+						<div class='form-group te-mgb'>
+							<div class='col-md-12 info-bottom'>
+								<div class='col-md-8'>
+									<h4>
+										资格认证 <span class='font-orange'> (*必填) </span>
+									</h4>
+								</div>
+							</div>
+							<div class='col-md-11'>
+								<div class='col-md-6'>
+									<div class='panel panel-default basicpanel-height b-radius'>
+										<div class='panel-heading b-radius'>
+											<strong>教学证件(*必填，否则无法发布课程)</strong>
+										</div>
+										<div class='panel-body text-danger'>
+											<div class='row'>
+												<div class='col-md-6'>
+													<img alt="Paper" class="img-circle" height="120px"
+														src="/static/image/userImg2.png"
+														width="120" />
+												</div>
+												<div class='col-md-6 tp-left'>
+													<p>1.学生使用学生证</p>
+													<p>2.家教使用教师资格证</p>
+													<p>3.照片不大于3M</p>
+													<p style="color: #C00;">
+														<input id="teachImage" name="src"
+														    type="file" required
+															data-msg-required="进行资格认证教学证件不能为空" />
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class='col-md-6'>
+									<input class=" btn btn-success" type="submit"
+										value="进行资格审核"
+										style="margin-top: 80px; margin-left: 100px;" />
+								</div>
+							</div>
+							<div class='col-md-11'>
+							<div class='col-md-12 info-bottom'>
+								<div class='col-md-8'>
+									<h4>
+										认证信息
+									</h4>
+								</div>
+							</div>
+							  <div class="col-md-6 thumbnail">
+							    <img src="{{ verify.src }}" />
+							  </div>
+							  <div class="col-md-6">
+							    <h3 class="text-center">审核状态</h3>
+							    <p class="text-info text-center">{% if not verify.reason %}<p class="text-center">暂未提交</p>{% else %}{{ verify.reason }}{% endif %}</p>
+							  </div>
+							</div>
+
+						</div>
+					</form>
+                   {% endif %}
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

@@ -1,0 +1,83 @@
+#footer-div {
+    background: none repeat scroll 0% 0% #2A2C2E;
+    border-top: 1px solid #E2E4E6;
+    font-size: 12px;
+    color: #8E999D;
+    line-height: 1.6;
+    padding-bottom: 27px;
+    padding-top: 27px;
+    width: 100%;
+    float: left;
+    min-width: 1100px;
+    height: auto;
+}
+#footer-div .wrapper {
+    width: 950px;
+}
+#footer-div .wrapper {
+    width: 950px;
+}
+.wrapper {
+    width: 1100px;
+    height: 100%;
+    margin: 0px auto;
+}
+.footer-service {
+    float: right;
+    margin: 70px 0;
+}
+.footer-service-title {
+    font-size: 24px;
+    color: #fff;
+}
+.footer-service-content {
+    font-size: 30px;
+    color: #fff;
+}
+.footer-intro {
+    padding-top: 10px;
+    width: 450px;
+    margin-right: 100px;
+    float: left;
+    font-size: 14px;
+    line-height: 20px;
+}
+.footer-intro-head {
+    margin-bottom: 30px;
+    color: #FFF;
+}
+.footer-desc {
+    font-size: 12px;
+    font-weight: normal;
+}
+.footer-about, .footer-contact {
+    width: 90px;
+    float: left;
+    padding-top: 30px;
+}
+.footer-list {
+    float: left;
+    width: 100%;
+    margin-left: 0px;
+    padding-left: 0px;
+    margin-top: 20px;
+    list-style: outside none none;
+}
+.footer-list li {
+    float: left;
+    line-height: 22px;
+    list-style: outside none none;
+}
+
+
+.footer-list li a {
+    float: left;
+    color: #FFF;
+    text-decoration: none;
+    outline: 0px none;
+    cursor: pointer;
+}
+.footer-intro-title {
+    margin: 0px 1em;
+    font-size: 20px;
+}
