@@ -1,0 +1,5 @@
+要在数据库中创建pgedu文件夹
+在配置文件中修改password为对应密码
+要将mysql设置成中文，用户是root
+在shell中创建数据库之后，要执行role.insert_roles()来创建角色.
+
